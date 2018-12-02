@@ -9,18 +9,20 @@ import           Test.Hspec
 
 import Day1
 
-readInt :: Text -> Int
-readInt = read . dropPlus . toS
-  where
-    dropPlus str@(c:cs) =
-      case c of
-        '+' -> cs
-        _   -> str
-
 day1 :: Spec
 day1 = do
   describe "Part 1" $ do
-    it "should sum all integers" $ do
-      contents <- fmap Text.lines $ Text.readFile "./test/input/Day1-1.txt"
-      let nums = map readInt contents
-      part1 nums `shouldBe` 439
+    it "should sum to -13" $ do
+      part1 [(-2), 3, 4, (-18)] `shouldBe` (-13)
+    it "should sum to 0" $ do
+      part1 [1, (-1)] `shouldBe` 0
+
+  describe "Part 2" $ do
+    it "should find 0" $ do
+      part2 [1, (-1)] `shouldBe` 0
+    it "should find 10" $ do
+      part2 [3, 3, 4, (-2), (-4)] `shouldBe` 10
+    it "should find 5" $ do
+      part2 [(-6), 3, 8, 5, (-6)] `shouldBe` 5
+    it "should find 14" $ do
+      part2 [7, 7, (-2), (-7), (-4)] `shouldBe` 14

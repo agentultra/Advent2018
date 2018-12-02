@@ -26,14 +26,18 @@ default-extensions:
 dependencies:
 - base >= 4.7 && < 5
 - protolude
+- text
 
 library:
   source-dirs: src
+  dependencies:
+  - containers
+  - lens
 
 executables:
-  Advent2018-exe:
+  Day1:
     main:                Main.hs
-    source-dirs:         app
+    source-dirs:         app/Day1
     ghc-options:
     - -threaded
     - -rtsopts
@@ -54,4 +58,3 @@ tests:
     dependencies:
     - Advent2018
     - hspec
-    - text
