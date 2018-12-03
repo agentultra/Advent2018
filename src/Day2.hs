@@ -1,7 +1,9 @@
 module Day2 where
 
-import Prelude (String)
-import Protolude
+import           Data.List hiding (map, sum)
+import qualified Data.Text as Text
+import           Prelude (String)
+import           Protolude
 
 scanID :: Text -> (Int, Int)
 scanID id =
@@ -18,7 +20,28 @@ part1 :: [Text] -> Int
 part1 ids =
   let sumCounts = sumGroups $ map scanID ids
   in
-    (fst sumCounts) * (snd sumCounts)
+    uncurry (*) sumCounts
   where
     sumGroups :: [(Int, Int)] -> (Int, Int)
     sumGroups = foldl' (\(l, r) (l', r') -> (l + l', r + r')) (0, 0)
+
+part2 :: [Text] -> Text
+part2 ids =
+  let cs = map (\(x, y) -> (toS x, toS y)) $ combinations ids
+      r  = [ common x y | (x, y) <- cs, isDiffByOne x y]
+  in
+    Text.concat $ map Text.pack r
+
+common :: String -> String -> String
+common x y = concat $ zipWith (\x' y' -> [x' | x' == y']) x y
+
+combinations :: [a] -> [(a, a)]
+combinations xs = [(x, y) | (x:xs') <- tails xs, y <- xs']
+
+isDiffByOne :: Eq a => [a] -> [a] -> Bool
+isDiffByOne xs ys
+  | xs == ys  = False
+  | otherwise =
+    let dist = sum $ zipWith (\x y -> if x == y then 0 else 1) xs ys
+    in
+      dist == 1

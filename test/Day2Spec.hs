@@ -35,3 +35,33 @@ day2 = do
 
       it "should checksum as 1 with one group of each" $ do
         part1 ["aabc", "aaabc"] `shouldBe` 1
+
+    describe "Part 2" $ do
+      context "combinations" $ do
+        it "should generate a single pair for a 2 element list" $ do
+          combinations ["a", "b"] `shouldBe` [("a", "b")]
+
+        it "should generate all combinations" $ do
+          combinations ["a", "b", "c"]
+            `shouldBe`
+            [ ("a", "b")
+            , ("a", "c")
+            , ("b", "c")
+            ]
+
+      context "isDiffByOne" $ do
+        it "should return False if lists are same" $ do
+          isDiffByOne "abc" "abc" `shouldBe` False
+
+        it "should return False if lists differ by more than one" $ do
+          isDiffByOne "abcde" "axcye" `shouldBe` False
+
+        it "should return True if lists differ by exactly one" $ do
+          isDiffByOne "fghij" "fguij" `shouldBe` True
+
+      context "solution" $ do
+        it "should return the common characters of the neighbours" $ do
+          part2 ["fghij", "fguij"] `shouldBe` "fgij"
+
+        it "should return the common characters of all the neighbours" $ do
+          part2 ["fghij", "fguij", "abcde", "abcdf"] `shouldBe` "fgijabcd"
