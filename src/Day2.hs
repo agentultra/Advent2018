@@ -39,6 +39,4 @@ isDiffByOne :: Eq a => [a] -> [a] -> Bool
 isDiffByOne xs ys
   | xs == ys  = False
   | otherwise =
-    let dist = sum $ zipWith (\x y -> if x == y then 0 else 1) xs ys
-    in
-      dist == 1
+    1 == (sum $ zipWith (\x y -> if x == y then 0 else 1) xs ys)
