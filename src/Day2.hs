@@ -28,12 +28,9 @@ part1 ids =
 part2 :: [Text] -> Text
 part2 ids =
   let cs = map (\(x, y) -> (toS x, toS y)) $ combinations ids
-      r  = [ common x y | (x, y) <- cs, isDiffByOne x y]
+      r  = [ x `intersect` y | (x, y) <- cs, isDiffByOne x y]
   in
     Text.concat $ map Text.pack r
-
-common :: String -> String -> String
-common x y = concat $ zipWith (\x' y' -> [x' | x' == y']) x y
 
 combinations :: [a] -> [(a, a)]
 combinations xs = [(x, y) | (x:xs') <- tails xs, y <- xs']
