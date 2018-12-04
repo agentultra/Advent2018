@@ -33,6 +33,7 @@ library:
   dependencies:
   - containers
   - lens
+  - split
 
 executables:
   Day1:
@@ -55,6 +56,16 @@ executables:
     - -j=4
     dependencies:
     - Advent2018
+  Day3:
+    main:                Main.hs
+    source-dirs:         app/Day3
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    - -j=4
+    dependencies:
+    - Advent2018
 
 tests:
   Advent2018-test:
@@ -67,4 +78,5 @@ tests:
     - -j=4
     dependencies:
     - Advent2018
+    - containers
     - hspec

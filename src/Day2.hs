@@ -5,6 +5,8 @@ import qualified Data.Text as Text
 import           Prelude (String)
 import           Protolude
 
+import Lib
+
 scanID :: Text -> (Int, Int)
 scanID id =
   let groups = filter (\x -> x == 2 || x == 3) $ groupLengths $ toS id
@@ -31,9 +33,6 @@ part2 ids =
       r  = [ x `intersect` y | (x, y) <- cs, isDiffByOne x y]
   in
     Text.concat $ map Text.pack r
-
-combinations :: [a] -> [(a, a)]
-combinations xs = [(x, y) | (x:xs') <- tails xs, y <- xs']
 
 isDiffByOne :: Eq a => [a] -> [a] -> Bool
 isDiffByOne xs ys

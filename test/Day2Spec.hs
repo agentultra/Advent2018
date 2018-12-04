@@ -4,6 +4,7 @@ import Protolude
 import Test.Hspec
 
 import Day2
+import Lib
 
 day2 :: Spec
 day2 = do

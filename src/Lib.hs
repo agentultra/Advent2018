@@ -10,3 +10,6 @@ readInt = read . dropPlus . toS
       case c of
         '+' -> cs
         _   -> str
+
+combinations :: [a] -> [(a, a)]
+combinations xs = [(x, y) | (x:xs') <- tails xs, y <- xs']
