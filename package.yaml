@@ -22,10 +22,13 @@ description:         Please see the README on GitHub at <https://github.com/gith
 default-extensions:
 - NoImplicitPrelude
 - OverloadedStrings
+- FlexibleContexts
 
 dependencies:
 - base >= 4.7 && < 5
 - protolude
+- time
+- parsec
 - text
 
 library:
@@ -66,6 +69,17 @@ executables:
     - -j=4
     dependencies:
     - Advent2018
+  Day4:
+    main:                Main.hs
+    source-dirs:         app/Day4
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    - -j=4
+    dependencies:
+    - Advent2018
+    - containers
 
 tests:
   Advent2018-test:
