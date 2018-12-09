@@ -109,4 +109,4 @@ asleepMinutes = foldl' countMins (M.fromList [(x, 0) | x <- [0..59]])
   where
     countMins :: Map Minute Int -> Interval -> Map Minute Int
     countMins acc (Interval _ start end) =
-      M.mapWithKey (\m c -> if start <= m && m <= end then c + 1 else c) acc
+      M.mapWithKey (\m c -> if start <= m && m < end then c + 1 else c) acc

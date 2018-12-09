@@ -18,5 +18,7 @@ main = do
     Right m -> do
       let gid@(GuardId n) = sleepyHead m
       let foo = maximumBy (compare `on` snd) $ M.toList $ asleepMinutes $ m ! gid
-      print (((fst foo)) * n)
+      print $ "Part 1: " ++ (show $ ((fst foo)) * n)
+      let bar@((GuardId x), (y, _)) = maximumBy (compare `on` (snd . snd)) $ M.toList $ M.map (maximumBy (compare `on` snd) . M.toList . asleepMinutes) m
+      print $ "Part 2: " ++ (show (x * y))
     Left err -> print err
