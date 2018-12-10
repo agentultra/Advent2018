@@ -5,6 +5,7 @@ import Day1Spec
 import Day2Spec
 import Day3Spec
 import Day4Spec
+import Day5Spec
 
 main :: IO ()
 main = hspec $ do
@@ -12,3 +13,4 @@ main = hspec $ do
   day2
   day3
   day4
+  day5
