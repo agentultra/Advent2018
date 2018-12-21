@@ -24,35 +24,90 @@ day6 =
         distances (Point 0 0) [] `shouldBe` []
 
       it "should return a list of distances" $
-        distances (Point 0 0) [Point 0 1, Point 5 8, Point (-5) (-8)]
+        distances (Point 0 0)
+        [ MapPoint 'a' (Point 0 1)
+        , MapPoint 'b' (Point 5 8)
+        , MapPoint 'c' (Point (-5) (-8))
+        ]
         `shouldBe`
-        [(Point 0 1, 1), (Point 5 8, 13), (Point (-5) (-8), 13)]
+        [ (MapPoint 'a' (Point 0 1), 1)
+        , (MapPoint 'b' (Point 5 8), 13)
+        , (MapPoint 'c' (Point (-5) (-8)), 13)
+        ]
 
-    describe "closestPoint" $ do
+    describe "closestMapPoint" $ do
       it "should return Nothing for equidistant points" $
-        closestPoint (Point 0 0) [Point 0 1, Point 0 (-1)]
+        closestMapPoint (Point 0 0) [MapPoint 'a' (Point 0 1), MapPoint 'b' (Point 0 (-1))]
         `shouldBe`
         Nothing
 
       it "should return Just the one point" $
-        closestPoint (Point 0 0) [Point 0 1] `shouldBe` Just (Point 0 1)
+        closestMapPoint (Point 0 0) [MapPoint 'a' (Point 0 1)]
+        `shouldBe`
+        Just (MapPoint 'a' (Point 0 1))
 
       it "should return the closest of many points" $
-        closestPoint (Point 0 0) [Point 12 23, Point 2 2, Point 3 3]
+        closestMapPoint (Point 0 0)
+        [ MapPoint 'a' (Point 12 23)
+        , MapPoint 'b' (Point 2 2)
+        , MapPoint 'c' (Point 3 3)]
         `shouldBe`
-        Just (Point 2 2)
+        Just (MapPoint 'b' (Point 2 2))
 
     describe "areas" $ do
       it "should return the empty map for empty list of points" $
-        areas [] `shouldBe` Map.empty
+        areas [] `shouldBe` Nothing
 
       it "should return empty map for 1 point" $
-        areas [Point 0 0] `shouldBe` Map.empty
+        areas [Point 0 0] `shouldBe` Nothing
 
       it "should return empty map for 2 points" $
-        areas [Point 0 0, Point 2 2] `shouldBe` Map.empty
+        areas [Point 0 0, Point 2 2] `shouldBe` Nothing
 
       it "should return a map for 3 points" $
         areas [Point 0 0, Point 3 3, Point 9 9]
         `shouldBe`
-        Map.empty
+        (Just $ MapArea (Point 0 0) (Point 9 9) $
+         Map.fromList
+         [ (Point {_x = 0, _y = 0}, 'a')
+         , (Point {_x = 0, _y = 3}, '.')
+         , (Point {_x = 0, _y = 4}, '.')
+         , (Point {_x = 0, _y = 5}, '.')
+         , (Point {_x = 0, _y = 6}, '.')
+         , (Point {_x = 0, _y = 7}, '.')
+         , (Point {_x = 0, _y = 8}, '.')
+         , (Point {_x = 0, _y = 9}, '.')
+         , (Point {_x = 1, _y = 2}, '.')
+         , (Point {_x = 1, _y = 9}, '.')
+         , (Point {_x = 2, _y = 1}, '.')
+         , (Point {_x = 2, _y = 9}, '.')
+         , (Point {_x = 3, _y = 0}, '.')
+         , (Point {_x = 3, _y = 3}, 'b')
+         , (Point {_x = 3, _y = 9}, '.')
+         , (Point {_x = 4, _y = 0}, '.')
+         , (Point {_x = 4, _y = 8}, '.')
+         , (Point {_x = 5, _y = 0}, '.')
+         , (Point {_x = 5, _y = 7}, '.')
+         , (Point {_x = 6, _y = 0}, '.')
+         , (Point {_x = 6, _y = 6}, '.')
+         , (Point {_x = 7, _y = 0}, '.')
+         , (Point {_x = 7, _y = 5}, '.')
+         , (Point {_x = 8, _y = 0}, '.')
+         , (Point {_x = 8, _y = 4}, '.')
+         , (Point {_x = 9, _y = 0}, '.')
+         , (Point {_x = 9, _y = 1}, '.')
+         , (Point {_x = 9, _y = 2}, '.')
+         , (Point {_x = 9, _y = 3}, '.')
+         , (Point {_x = 9, _y = 9}, 'c')
+         ])
+
+    describe "largestFiniteArea" $ do
+      it "should return Nothing if none can be found" $
+        largestFiniteArea [Point 0 0, Point 9 9]
+        `shouldBe`
+        Nothing
+
+      it "should return 1 for a small finite area" $
+        largestFiniteArea [Point 0 0, Point 3 3, Point 9 9]
+        `shouldBe`
+        Just 1
